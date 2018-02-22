@@ -1,0 +1,65 @@
+﻿<div  style="padding: 16px">
+    <h1>music albums</h1>
+
+    <input type="button" value="Add" class="btn btn-primary" (click)="add()" />
+    <table *ngIf="tableMode; else create" class="table table-striped">
+        <thead>
+            <tr>
+                <td>Artist</td>
+                <td>Name</td>
+                <td>Year</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let a of albums">
+                <ng-template [ngIf]="selectedAlbum?.id != a.id" [ngIfElse]="edit">
+                    <td>{{a?.artist}}</td>
+                    <td>{{a?.name}}</td>
+                    <td>{{a?.year}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="editAlbum(a)">Edit</button>
+                        <button class="btn btn-sm btn-danger" (click)="delete(a)">Delete</button>
+                    </td>
+                </ng-template>
+            </tr>
+        </tbody>
+    </table>
+
+    <!--editing template-->
+    <ng-template #edit>
+        <td>
+            <input type="text" [(ngModel)]="selectedAlbum.artist" class="form-control" />
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="selectedAlbum.name" class="form-control" />
+        </td>
+        <td>
+            <input type="text" [(ngModel)]="selectedAlbum.year" class="form-control" />
+        </td>
+        <td>
+            <input type="button" value="Save" (click)="save()" class="btn btn-sm btn-success" />
+            <input type="button" value="Cancel" (click)="cancel()" class="btn btn-sm btn-warning" />
+        </td>
+    </ng-template>
+
+    <!--adding template -->
+    <ng-template #create>
+        <div class="form-group">
+            <label>Artist</label>
+            <input type="text" [(ngModel)]="selectedAlbum.artist" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" [(ngModel)]="selectedAlbum.name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Year</label>
+            <input type="text" [(ngModel)]="selectedAlbum.year" class="form-control" />
+        </div>
+        <div>
+            <input type="button" value="Save" (click)="save()" class="btn btn-success" />
+            <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
+        </div>
+    </ng-template>
+</div>
